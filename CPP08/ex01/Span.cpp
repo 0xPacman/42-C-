@@ -45,9 +45,6 @@ void Span::addNumber(int n)
         throw FullException();
     m_v.push_back(n);
 }
-/* They will respectively find out the shortest span or the longest span (or distance, if
-you prefer) between all the numbers stored, and return it. If there are no numbers stored,
-or only one, no span can be found. Thus, throw an exception */
 int Span::shortestSpan()
 {
     if (m_v.size() <= 1)
