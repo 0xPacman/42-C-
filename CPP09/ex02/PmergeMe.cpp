@@ -21,13 +21,14 @@ PmergeMe::PmergeMe(PmergeMe const & src)
 	*this = src;
 }
 
-PmergeMe::PmergeMe(char **args)
+PmergeMe::PmergeMe(int size,char **args)
 {
 	std::cout << "Before: ";
 	for (int i = 1; args[i]; i++)
 	{
 		std::cout << args[i] << " ";
 	}
+	m_size = size;
 }
 
 PmergeMe::~PmergeMe()
@@ -44,8 +45,31 @@ PmergeMe & PmergeMe::operator=(PmergeMe const & obj)
 	return *this;
 }
 
-// use merge sort to sort the set
-std::set<long> PmergeMe::sortSet(std::set<long> set)
-{
-	
+std::array<long, m_size> PmergeMe::sortArray(std::array<long, m_size> array) {
+    if (array.size() <= 1) {
+        return array;
+    }
+    int mid = array.size() / 2;
+    std::array<long, m_size> left, right;
+    std::copy_n(array.begin(), mid, left.begin());
+    std::copy_n(array.begin() + mid, array.size() - mid, right.begin());
+    left = sortArray(left);
+    right = sortArray(right);
+    std::array<long, m_size> merged;
+    int i = 0, j = 0, k = 0;
+    while (i < left.size() && j < right.size()) {
+        if (left[i] < right[j]) {
+            merged[k++] = left[i++];
+        } else {
+            merged[k++] = right[j++];
+        }
+    }
+    while (i < left.size()) {
+        merged[k++] = left[i++];
+    }
+    while (j < right.size()) {
+        merged[k++] = right[j++];
+    }
+    return merged;
 }
+

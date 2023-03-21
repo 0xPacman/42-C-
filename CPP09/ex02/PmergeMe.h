@@ -14,19 +14,20 @@
 # define PMERGEME_H
 
 #include <iostream>
-#include <set>
-#include <list>
+#include <array>
+#include <deque>
 class PmergeMe
 {
 	private:
-		std::set<long> m_set;
-		std::list<long> m_list;
-		std::set<long> sortSet(std::set<long> set);
-		std::list<long> sortList(std::list<long> list);
+		int m_size;
+		std::array<int, m_size> m_array;
+		std::deque<int> m_deque;
+		std::array<long, m_size> sortArray(std::array<long, m_size> array);
+		std::deque<long> sortDeque(std::deque<long> deque);
 	public:
 		PmergeMe();
 		PmergeMe(PmergeMe const & src);
-		PmergeMe(char **args);
+		PmergeMe(int size, char **args);
 		~PmergeMe();
 		PmergeMe & operator=(PmergeMe const & obj);
 };
