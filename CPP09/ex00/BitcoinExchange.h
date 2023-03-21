@@ -19,7 +19,8 @@
 # include <map>
 # include <sstream>
 # include <ctime>
-#include <dirent.h>
+# include <cstring>
+# include <dirent.h>
 
 class BitcoinExchange
 {

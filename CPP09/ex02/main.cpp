@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 		std::cout << "Error" << std::endl;
 		return 1;
 	}
-	PmergeMe p(argv);
+	PmergeMe p(argc - 1,argv);
+	
 	return 0;
 }
