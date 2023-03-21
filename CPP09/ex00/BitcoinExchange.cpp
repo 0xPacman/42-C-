@@ -43,20 +43,67 @@ BitcoinExchange & BitcoinExchange::operator=(BitcoinExchange const & obj)
 	return *this;
 }
 
-int BitcoinExchange::string_2_timestamp(const std::string &date_string)
-{
-    std::tm date_tm;
-    std::istringstream date_stream(date_string);
+void BitcoinExchange::checkValidTime(Time time) {
+    m_error = 0;
+    
+    if (time.year < 2009 || time.year > 2023) {
+        std::cout << "Error: invalid year." << std::endl;
+        m_error = 1;
+    }
+    
+    if (time.month < 1 || time.month > 12) {
+        std::cout << "Error: invalid month." << std::endl;
+        m_error = 1;
+    }
+    
+    if (time.month == 2) {
+        if (time.year % 4 == 0) {
+            if (time.day < 1 || time.day > 29) {
+                std::cout << "Error: invalid day." << std::endl;
+                m_error = 1;
+            }
+        } else {
+            if (time.day < 1 || time.day > 28) {
+                std::cout << "Error: invalid day." << std::endl;
+                m_error = 1;
+            }
+        }
+    } else if (time.month == 4 || time.month == 6 || time.month == 9 || time.month == 11) {
+        if (time.day < 1 || time.day > 30) {
+            std::cout << "Error: invalid day." << std::endl;
+            m_error = 1;
+        }
+    } else {
+        if (time.day < 1 || time.day > 31) {
+            std::cout << "Error: invalid day." << std::endl;
+            m_error = 1;
+        }
+    }
+}
 
+int BitcoinExchange::string_2_timestamp(const std::string &date_string) {
+	std::tm date_tm;
+    std::istringstream date_stream(date_string);
+	m_error = 0;
     date_stream >> std::get_time(&date_tm, "%Y-%m-%d");
     if (date_stream.fail())
-        std::cout << "Error: bad input => " << date_string << std::endl;
+	{
+		std::cout << "Error: invalid date format." << std::endl;
+		m_error = 1;
+	}
 
-    if (date_tm.tm_mon != date_tm.tm_mon || date_tm.tm_mday != date_tm.tm_mday)
-        std::cout << "Error: invalid date format." << std::endl;
+    if (date_tm.tm_mon != date_tm.tm_mon || date_tm.tm_mday != date_tm.tm_mday) 
+	{
+        std::cout << "Error: invalid date." << std::endl;
+		m_error = 1;
+    }
 
-	std::time_t t = std::mktime(&date_tm);
-	return t;
+    Time time;
+    time.year = date_tm.tm_year + 1900;
+    time.month = date_tm.tm_mon + 1;
+    time.day = date_tm.tm_mday;
+	checkValidTime(time);
+    return std::mktime(&date_tm);
 }
 
 void checkForCSVFile()
@@ -129,6 +176,8 @@ void BitcoinExchange::parseInput(std::string input)
 			continue;
 		}
 		int timestamp = string_2_timestamp(date);
+		if (m_error == 1)
+			continue;
 		std::map<int, float>::iterator it = m_data.find(timestamp);
 		if (std::atof(value.c_str()) < 0)
 		{
@@ -156,12 +205,10 @@ void BitcoinExchange::parseInput(std::string input)
 
 bool BitcoinExchange::checkValidLine(std::string line)
 {
-    // Check if the line contains a '|'
     size_t pos = line.find('|');
     if (pos == std::string::npos)
         return false;
 
-    // Check if the value is valid
     std::string value = line.substr(pos + 1);
     bool is_number = true;
     int dot_count = 0;

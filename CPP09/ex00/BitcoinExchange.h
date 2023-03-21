@@ -20,6 +20,14 @@
 # include <sstream>
 # include <ctime>
 #include <dirent.h>
+#include <chrono>
+#include <iomanip>
+
+struct Time {
+  int year;
+  int month;
+  int day;
+};
 
 class BitcoinExchange
 {
@@ -27,6 +35,7 @@ class BitcoinExchange
 		std::map<int, float> m_data;
 		std::string m_filename;
 		std::string m_csvfile;
+		int m_error;
 		void parseFile(std::string filename);
 		void parseInput(std::string input);
 	public:
@@ -36,7 +45,7 @@ class BitcoinExchange
 		~BitcoinExchange();
 		BitcoinExchange & operator=(BitcoinExchange const & obj);
 		int string_2_timestamp(const std::string &date_string);
-
+		void checkValidTime(Time time);
 		bool checkValidLine(std::string line);
 		void debug();
 };
