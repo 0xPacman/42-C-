@@ -16,17 +16,16 @@
 # include <iostream>
 # include <fstream>
 # include <string>
-# include <vector>
+# include <list>
 # include <sstream>
 # include <ctime>
 #include <dirent.h>
-#include <regex>
 #include <stdbool.h>
 
 class RPN
 {
 	private:
-		std::vector<int> m_exp;
+		std::list<int> m_exp;
 		bool	checkArg(std::string arg);
 		int		postfix(std::string arg);
 	public:

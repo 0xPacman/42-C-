@@ -52,10 +52,8 @@ void RPN::debug()
 
 bool RPN::checkArg(std::string arg)
 {
-	std::regex r("^[0-9+\\-*\\/\\s]+$");
-	if (std::regex_match(arg, r))
-		return true;
-	return false;
+    std::string validChars = "0123456789+-*/ ";
+    return arg.find_first_not_of(validChars) == std::string::npos;
 }
 
 int RPN::postfix(std::string arg)
@@ -91,6 +89,11 @@ int RPN::postfix(std::string arg)
 		else if (token == "/")
 		{
 			int a = m_exp.back();
+			if (a == 0)
+			{
+				std::cout << "Error" << std::endl;
+				exit(1);
+			}
 			m_exp.pop_back();
 			int b = m_exp.back();
 			m_exp.pop_back();

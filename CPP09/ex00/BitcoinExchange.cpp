@@ -225,7 +225,6 @@ bool BitcoinExchange::checkValidLine(std::string line)
     if (dot_count > 1 || !is_number)
         return false;
 
-    // If all checks passed, the line is valid
     return true;
 }
 
