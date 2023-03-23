@@ -64,6 +64,11 @@ int RPN::postfix(std::string arg)
 	{
 		if (token == "+")
 		{
+			if (m_exp.size() < 2)
+			{
+				std::cout << "Error: insufficient operands" << std::endl;
+				exit(1);
+			}
 			int a = m_exp.back();
 			m_exp.pop_back();
 			int b = m_exp.back();
@@ -72,6 +77,11 @@ int RPN::postfix(std::string arg)
 		}
 		else if (token == "-")
 		{
+			if (m_exp.size() < 2)
+			{
+				std::cout << "Error: insufficient operands" << std::endl;
+				exit(1);
+			}
 			int a = m_exp.back();
 			m_exp.pop_back();
 			int b = m_exp.back();
@@ -80,6 +90,11 @@ int RPN::postfix(std::string arg)
 		}
 		else if (token == "*")
 		{
+			if (m_exp.size() < 2)
+			{
+				std::cout << "Error: insufficient operands" << std::endl;
+				exit(1);
+			}
 			int a = m_exp.back();
 			m_exp.pop_back();
 			int b = m_exp.back();
@@ -88,6 +103,11 @@ int RPN::postfix(std::string arg)
 		}
 		else if (token == "/")
 		{
+			if (m_exp.size() < 2)
+			{
+				std::cout << "Error: insufficient operands" << std::endl;
+				exit(1);
+			}
 			int a = m_exp.back();
 			if (a == 0)
 			{
