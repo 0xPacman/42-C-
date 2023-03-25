@@ -62,6 +62,11 @@ int RPN::postfix(std::string arg)
 	std::string token;
 	while (std::getline(ss, token, ' '))
 	{
+		if (atoi(token.c_str()) > 10 || atoi(token.c_str()) < 0)
+		{
+			std::cout << "Error!" << std::endl;
+			exit(1);
+		}
 		if (token == "+")
 		{
 			if (m_exp.size() < 2)
@@ -111,7 +116,7 @@ int RPN::postfix(std::string arg)
 			int a = m_exp.back();
 			if (a == 0)
 			{
-				std::cout << "Error" << std::endl;
+				std::cout << "Error: division by zero occurred" << std::endl;
 				exit(1);
 			}
 			m_exp.pop_back();

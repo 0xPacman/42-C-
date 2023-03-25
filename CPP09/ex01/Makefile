@@ -15,7 +15,7 @@ SRC = main.cpp RPN.cpp
 OBJS = $(SRC:.cpp=.o)
 INC = RPN.h
 CC = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 RM = rm -f
 
 %.o : %.cpp

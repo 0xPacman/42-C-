@@ -41,7 +41,9 @@ PmergeMe::PmergeMe(int size,char **args)
     std::cout << std::endl;
     std::cout << "After:   ";
     for (int i = 0; i < size; i++)
-    {
+    {   
+        
+            // break;
         if (i == size - 1)
             std::cout << sorted[i];
         else
