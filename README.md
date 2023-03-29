@@ -12,4 +12,4 @@ The aim of this project is to learn the basics of C++ and OPP, and following the
 - CPP06 : Casts
 - CPP07 : Templates
 - CPP08 : Templated containers, iterators, algorithms
-- CPP09 : Containers, algorithms
+- CPP09 : Using containers, algorithms
